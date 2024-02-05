@@ -1,5 +1,6 @@
 package uk.tw.energy.exceptionhandling;
 
+import lombok.extern.slf4j.XSlf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -8,6 +9,7 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 @ControllerAdvice
+@XSlf4j
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(NoHandlerFoundException.class)
