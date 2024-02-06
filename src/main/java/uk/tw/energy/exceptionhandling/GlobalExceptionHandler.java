@@ -9,7 +9,6 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 @ControllerAdvice
-@XSlf4j
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(NoHandlerFoundException.class)

@@ -2,6 +2,7 @@ package uk.tw.energy;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -9,12 +10,10 @@ import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import uk.tw.energy.domain.ElectricityReading;
 import uk.tw.energy.domain.PricePlan;
 import uk.tw.energy.generator.ElectricityReadingsGenerator;
+import uk.tw.energy.models.Company;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static java.util.Collections.emptyList;
 
@@ -26,6 +25,17 @@ public class SeedingApplicationDataConfiguration {
     private static final String STANDARD_PRICE_PLAN_ID = "price-plan-2";
 
     @Bean
+    @Qualifier("energyCompanies")
+    public List<Company> energyCompanies() {
+        final List<Company> companies = new ArrayList<>();
+        companies.add(new Company(UUID.randomUUID().toString(), "Dr Evil's Dark Energy"));
+        companies.add(new Company(UUID.randomUUID().toString(), "The Green Eco"));
+        companies.add(new Company(UUID.randomUUID().toString(), "Power for Everyone"));
+        return companies;
+    }
+
+    @Bean
+    @Qualifier("pricePlans")
     public List<PricePlan> pricePlans() {
         final List<PricePlan> pricePlans = new ArrayList<>();
         pricePlans.add(new PricePlan(MOST_EVIL_PRICE_PLAN_ID, "Dr Evil's Dark Energy", BigDecimal.TEN, emptyList()));
@@ -35,6 +45,7 @@ public class SeedingApplicationDataConfiguration {
     }
 
     @Bean
+    @Qualifier("perMeterElectricityReadings")
     public Map<String, List<ElectricityReading>> perMeterElectricityReadings() {
         final Map<String, List<ElectricityReading>> readings = new HashMap<>();
         final ElectricityReadingsGenerator electricityReadingsGenerator = new ElectricityReadingsGenerator();
@@ -45,6 +56,7 @@ public class SeedingApplicationDataConfiguration {
     }
 
     @Bean
+    @Qualifier("smartMeterToPricePlanAccounts")
     public Map<String, String> smartMeterToPricePlanAccounts() {
         final Map<String, String> smartMeterToPricePlanAccounts = new HashMap<>();
         smartMeterToPricePlanAccounts.put("smart-meter-0", MOST_EVIL_PRICE_PLAN_ID);

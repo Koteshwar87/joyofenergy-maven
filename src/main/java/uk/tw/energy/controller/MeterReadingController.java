@@ -18,9 +18,8 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/readings")
-@XSlf4j
 public class MeterReadingController {
-
+    // POST, GET, PUT, DELETE
     private final MeterReadingService meterReadingService;
 
     public MeterReadingController(MeterReadingService meterReadingService) {
