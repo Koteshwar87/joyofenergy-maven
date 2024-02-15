@@ -22,8 +22,9 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public CompanyResponseDto saveCompany(CompanyRequestDto companyDetails) {
-        companyRepository.addCompany(new Company(UUID.randomUUID().toString(), companyDetails.getCompanyName()));
-        return new CompanyResponseDto(companyDetails.getCompanyName());
+        Company company = new Company(UUID.randomUUID().toString(), companyDetails.getCompanyName());
+        companyRepository.addCompany(company);
+        return new CompanyResponseDto(company.getCompanyId(), company.getName());
     }
 
     @Override
@@ -32,6 +33,7 @@ public class CompanyServiceImpl implements CompanyService {
         List<CompanyResponseDto> companyResponseDtos = allCompanies.stream()
                 .map(company -> {
                     CompanyResponseDto dto = new CompanyResponseDto();
+                    dto.setCompanyId(company.getCompanyId());
                     dto.setCompanyName(company.getName());
                     return dto;
                 }).collect(Collectors.toList());

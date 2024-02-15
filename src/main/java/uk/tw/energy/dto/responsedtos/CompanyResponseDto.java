@@ -10,5 +10,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class CompanyResponseDto {
+    private String companyId;
     private String companyName;
 }

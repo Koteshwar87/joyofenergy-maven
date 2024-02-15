@@ -1,5 +1,6 @@
 package uk.tw.energy.controller;
 
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +12,7 @@ import uk.tw.energy.service.CompanyService;
 import java.util.List;
 
 // https://www.javaguides.net/2018/06/restful-api-design-best-practices.html
+//https://medium.com/@tericcabrel/validate-request-body-and-parameter-in-spring-boot-53ca77f97fe9
 @RestController
 @RequestMapping("/api/v1")
 public class CompanyController {
@@ -21,7 +23,7 @@ public class CompanyController {
     }
 
     @PostMapping("/companies")
-    public ResponseEntity<APIResponse<CompanyResponseDto>> addCompany(@RequestBody CompanyRequestDto companyRequestDto) {
+    public ResponseEntity<APIResponse<CompanyResponseDto>> addCompany(@Valid @RequestBody CompanyRequestDto companyRequestDto) {
         CompanyResponseDto companyResponseDto = companyService.saveCompany(companyRequestDto);
 
         APIResponse response =
@@ -29,6 +31,7 @@ public class CompanyController {
                         .data(companyResponseDto)
                         .httpStatus(HttpStatus.ACCEPTED.value())
                         .message("New Company is added")
+                        .status(HttpStatus.ACCEPTED.toString())
                         .build();
 
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
@@ -42,6 +45,7 @@ public class CompanyController {
                         .data(companyResponseDtos)
                         .httpStatus(HttpStatus.ACCEPTED.value())
                         .message("List of companies")
+                        .status(HttpStatus.ACCEPTED.toString())
                         .build();
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
