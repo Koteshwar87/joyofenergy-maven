@@ -31,8 +31,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
 
         ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST);
-        apiError.setMessage(String.format("Invalid request body %s ", ex.getMessage()));
-//        apiError.setDebugMessage(ex.getMessage());
+        apiError.setMessage(String.format("Invalid request body"));
+        apiError.setDebugMessage(ex.getMessage());
         return buildResponseEntity(apiError);
     }
 

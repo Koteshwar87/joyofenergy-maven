@@ -1,4 +1,4 @@
-package uk.tw.energy.exceptionhandling;
+package uk.tw.energy.exceptionhandling.exceptions;
 
 public class ResourceNotFoundException extends RuntimeException {
 
